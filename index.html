@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мебель на заказ</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Стили для модальных окон */
+        .modal {
+            display: none; /* Скрыто по умолчанию */
+            position: fixed; /* Фиксированная позиция */
+            z-index: 1; /* Размещаем поверх всего */
+            left: 0;
+            top: 0;
+            width: 100%; /* Полная ширина */
+            height: 100%; /* Полная высота */
+            overflow: auto; /* Включаем прокрутку, если контент больше экрана */
+            background-color: rgba(0,0,0,0.4); /* Полупрозрачный фон */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* Центрируем по вертикали и горизонтали */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Ширина окна */
+            max-width: 500px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        /* Добавляем ко всем модалкам чтобы не пересекалось */
+        .nav-modal .modal-content {
+         background-color: #fefefe;
+        margin: 15% auto; /* Центрируем по вертикали и горизонтали */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%; /* Ширина окна */
+        max-width: 800px;
+}
+/* Добавляем стили для звезд */
+.rating-input {
+    display: none;
+}
+
+.rating-label {
+    font-size: 2em;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.rating-label:hover,
+.rating-label:hover ~ .rating-label,
+.rating-input:checked ~ .rating-label {
+    color: #f39c12;
+}
+
+.link-na-otsov{
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    background-color: #e44d26;
+    transition: background-color 0.3s;
+}
+    </style>
+
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-container">
+            <a href="#" class="logo">Мебель на заказ</a>
+            <div class="header-right">
+                <div class="phone-numbers">
+                    <a href="tel:+79509697344">+7 (950) 969 73 44</a>
+                </div>
+                <div class="user-actions">
+                    <a href="#" class="login-button">Войти</a>
+                    <a href="#" class="register-button">Регистрация</a>
+                    <a href="#" id="logout-button" style="display:none;">Выйти</a>
+                    <a href="#" id="account-info-button" style="display:none;">Личный кабинет</a>
+                </div>
+            </div>
+    
+    <!-- Модальное окно для входа -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Вход</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email:</label>
+                    <input type="email" id="loginEmail" name="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Пароль:</label>
+                    <input type="password" id="loginPassword" name="loginPassword" required>
+                </div>
+                <button type="submit">Войти</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для регистрации -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Регистрация</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">Имя:</label>
+                    <input type="text" id="registerName" name="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email:</label>
+                    <input type="email" id="registerEmail" name="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Пароль:</label>
+                    <input type="password" id="registerPassword" name="registerPassword" required>
+                </div>
+                <button type="submit">Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>
+    <!-- Модальное окно информации об аккаунте -->
+    <div id="accountInfoModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Информация об аккаунте</h2>
+            <p>Имя: <span id="accountName"></span></p>
+            <p>Email: <span id="accountEmail"></span></p>
+        </div>
+    </div>
+        </div>
+    </header>
+
+    <nav class="navigation">
+        <div class="nav-container">
+            <ul>
+                <li><a href="#" data-modal="soft-furniture-modal">Мягкая мебель</a></li>
+                <li><a href="#" data-modal="cabinet-furniture-modal">Корпусная мебель</a></li>
+                <li><a href="#" data-modal="kitchens-modal">Кухни</a></li>
+                <li><a href="#" data-modal="childrens-furniture-modal">Детская мебель</a></li>
+                <li><a href="#" data-modal="office-furniture-modal">Офисная мебель</a></li>
+                <li><a href="#" data-modal="mattresses-modal">Матрасы</a></li>
+                <li><a href="#" data-modal="accessories-modal">Аксессуары</a></li>
+                <li><a href="#" data-modal="promotions-modal">Акции</a></li>
+                <li><a href="#" data-modal="contacts-modal">Контакты</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Модальные окна -->
+    <div id="soft-furniture-modal" class="modal nav-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Мягкая мебель</h2>
+            <img src="./assets/img/bed-bely.png" alt="Мягкая мебель">
+        </div>
+    </div>
+
+    <div id="cabinet-furniture-modal" class="modal nav-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Корпусная мебель</h2>
+            <img src="/assets/img/shkaf.png" alt="Корпусная мебель">
+        </div>
+    </div>
+
+    <div id="kitchens-modal" class="modal nav-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Кухни</h2>
+            <img src="/assets/img/kuhna.png" alt="Кухни">
+        </div>
+    </div>
+
+    <div id="childrens-furniture-modal" class="modal nav-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Детская мебель</h2>
+            <img src="" alt="Детская мебель">
+        </div>
+    </div>
+
+     <div id="office-furniture-modal" class="modal nav-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Офисная мебель</h2>
+            <img src="" alt="Офисная мебель">
+        </div>
+    </div>
+
+     <div id="mattresses-modal" class="modal nav-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Матрасы</h2>
+            <img src="" alt="Матрасы">
+        </div>
+    </div>
+
+     <div id="accessories-modal" class="modal nav-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Аксессуары</h2>
+            <img src="" alt="Аксессуары">
+        </div>
+    </div>
+
+     <div id="promotions-modal" class="modal nav-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Акции</h2>
+            <p>Здесь будет информация об акциях. Пока что пусто.</p>
+        </div>
+    </div>
+
+     <div id="contacts-modal" class="modal nav-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Контакты</h2>
+            <p>Номер Петра</p>
+            <a href="ffbgdbd">+7 950 969 73 44</a>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="container">
+
+            <section class="slider">
+                <div class="slider-item">
+                    <img src="./assets/img/slaid.png" alt="Слайд 1">
+                </div>
+                <!-- Другие слайды -->
+            </section>
+
+            <section class="categories">
+                <h2>Категории мебели</h2>
+                <div class="categories-grid">
+                    <div class="category-item">
+                        <img src="./assets/img/bely-divan.png" alt="Мягкая мебель">
+                        <h3>Мягкая мебель</h3>
+                    </div>
+                    <div class="category-item">
+                        <img src="./assets/img/shkaf.png" alt="Корпусная мебель">
+                        <h3>Корпусная мебель</h3>
+                    </div>
+                   <div class="category-item">
+                        <img src="./assets/img/bed-flowers.png" alt="Мягкая мебель">
+                        <h3>Мягкая мебель</h3>
+                    </div>
+                    <div class="category-item">
+                        <img src="./assets/img/prihozhaya.png" alt="Корпусная мебель">
+                        <h3>Корпусная мебель</h3>
+                    </div>
+                    <!-- Другие категории -->
+                </div>
+            </section>
+
+            <section class="featured-products">
+                <h2>Популярные товары</h2>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <img src="./assets/img/bed-bely.png" alt="Кровать">
+                        <h3>Кровать "Комфорт"</h3>
+                        <p>Цена: 14 999 руб.</p>
+                        <a href="#" class="product-button">Подробнее</a>
+                    </div>
+                     <div class="product-card">
+                        <img src="./assets/img/kuhna.png" alt="Кухня">
+                        <h3>Кухня</h3>
+                        <p>Цена: 14 999 руб.</p>
+                        <a href="#" class="product-button">Подробнее</a>
+                    </div>
+                     <div class="product-card">
+                        <img src="./assets/img/divan.png" alt="Диван">
+                        <h3>Диван "Комфорт"</h3>
+                        <p>Цена: 24 999 руб.</p>
+                        <a href="#" class="product-button">Подробнее</a>
+                    </div>
+                    <div class="product-card">
+                        <img src="./assets/img/bed-flowers.png" alt="Кровать">
+                        <h3>Кровать "Орхидея"</h3>
+                        <p>Цена: 17 999 руб.</p>
+                        <a href="#" class="product-button">Подробнее</a>
+                    </div>
+                    <!-- Другие товары -->
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+</div>
+</main>
+
+<section class="reviews">
+    <div class="container">
+        <h2>Отзывы наших клиентов</h2>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="./assets/img/ivan.png" alt="Аватар клиента">
+                    <h3>Иван Иванов</h3>
+                </div>
+                <p>"Отличная мебель! Качество на высоте, доставили быстро и без проблем. Рекомендую!"</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="./assets/img/elena.png" alt="Аватар клиента">
+                    <h3>Елена Петрова</h3>
+                </div>
+                <p>"Заказывала кухню. Все сделали по моим размерам, очень довольна! Спасибо!"</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+            </div>
+            <div class="ostav-otzov">
+                <p>вы можете оставить свой отзыв по ссылке, и ваш отзыв будет тут</p>
+                <a href="https://t.me/"class="link-na-otsov">оставить отзыв</a>
+            </div>
+
+            <!-- Другие отзывы -->
+        </div>
+    </div>
+</section>
+
+
+<footer class="footer">
+    <div class="footer-container">
+        <p>&copy; 2025 Мебель на заказ Казань.</p>
+        <div class="social-links">
+            <span>Связаться со мной:</span>
+            <a href="https://vk.com/" target="_blank"><i class="fab fa-vk"></i></a>
+            <a href="https://t.me/" target="_blank"><i class="fab fa-telegram"></i></a>
+            <!-- Добавьте другие социальные сети, если нужно -->
+        </div>
+    </div>
+</footer>
+
+    
+    <!-- Модальное окно для входа -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Вход</h2>
+            <form>
+                <div class="form-group">
+                    <label for="loginEmail">Email:</label>
+                    <input type="email" id="loginEmail" name="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Пароль:</label>
+                    <input type="password" id="loginPassword" name="loginPassword" required>
+                </div>
+                <button type="submit">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно для регистрации -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Регистрация</h2>
+            <form>
+                <div class="form-group">
+                    <label for="registerName">Имя:</label>
+                    <input type="text" id="registerName" name="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email:</label>
+                    <input type="email" id="registerEmail" name="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Пароль:</label>
+                    <input type="password" id="registerPassword" name="registerPassword" required>
+                </div>
+                <button type="submit">Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Получаем модальные окна
+        var loginModal = document.getElementById("loginModal");
+        var registerModal = document.getElementById("registerModal");
+        var accountInfoModal = document.getElementById("accountInfoModal");
+
+        // Получаем кнопки
+        var loginBtn = document.querySelector(".login-button");
+        var registerBtn = document.querySelector(".register-button");
+        var logoutBtn = document.getElementById("logout-button");
+        var accountInfoBtn = document.getElementById("account-info-button");
+
+        // Получаем спаны с информацией об аккаунте
+        var accountNameSpan = document.getElementById("accountName");
+        var accountEmailSpan = document.getElementById("accountEmail");
+
+        // Получаем формы
+        var loginForm = document.getElementById("loginForm");
+        var registerForm = document.getElementById("registerForm");
+
+        // Получаем элементы <span>, которые закрывают модальные окна
+        var loginCloseBtn = loginModal.querySelector(".close");
+        var registerCloseBtn = registerModal.querySelector(".close");
+         var accountInfoCloseBtn = accountInfoModal.querySelector(".close");
+
+        // Функция отображения панели с аккаунтом
+        function showAccountPanel(name, email) {
+            loginBtn.style.display = "none";
+            registerBtn.style.display = "none";
+            logoutBtn.style.display = "inline-block";
+            accountInfoBtn.style.display = "inline-block";
+
+            accountNameSpan.textContent = name;
+            accountEmailSpan.textContent = email;
+
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('accountName', name);
+            localStorage.setItem('accountEmail', email);
+        }
+
+        // Функция скрытия панели с аккаунтом
+        function hideAccountPanel() {
+            loginBtn.style.display = "inline-block";
+            registerBtn.style.display = "inline-block";
+            logoutBtn.style.display = "none";
+            accountInfoBtn.style.display = "none";
+
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('accountName');
+            localStorage.removeItem('accountEmail');
+        }
+
+        // При загрузке страницы проверяем, залогинен ли пользователь
+        window.onload = function() {
+            if (localStorage.getItem('isLoggedIn') === 'true') {
+                showAccountPanel(localStorage.getItem('accountName'), localStorage.getItem('accountEmail'));
+            }
+        };
+        // При отправке формы входа
+        loginForm.addEventListener("submit", function(event) {
+            event.preventDefault(); // Предотвращаем отправку формы
+
+            // Получаем данные из формы
+            var email = document.getElementById("loginEmail").value;
+            var password = document.getElementById("loginPassword").value;
+
+            // Здесь должна быть проверка логина (в реальном проекте)
+            // В данном примере просто имитируем успешный вход
+            loginModal.style.display = "none";
+            showAccountPanel("User Name", email); // Имя пользователя
+            // Перенаправляем пользователя на главную страницу или личный кабинет
+            // window.location.href = "index.html";
+        });
+
+        // При отправке формы регистрации
+        registerForm.addEventListener("submit", function(event) {
+            event.preventDefault(); // Предотвращаем отправку формы
+
+            // Получаем данные из формы
+            var name = document.getElementById("registerName").value;
+            var email = document.getElementById("registerEmail").value;
+            var password = document.getElementById("registerPassword").value;
+
+            // Здесь должна быть логика регистрации (в реальном проекте)
+            // В данном примере просто имитируем успешную регистрацию
+            registerModal.style.display = "none";
+            showAccountPanel(name, email);
+            // Перенаправляем пользователя на главную страницу или личный кабинет
+            // window.location.href = "index.html";
+        });
+
+        // При нажатии на кнопку "Выйти"
+        logoutBtn.addEventListener("click", function() {
+            hideAccountPanel();
+           // Дополнительная логика выхода, например, очистка cookie
+        });
+        accountInfoBtn.addEventListener("click", function() {
+            accountInfoModal.style.display = "block";
+        });
+
+         accountInfoCloseBtn.onclick = function() {
+            accountInfoModal.style.display = "none";
+        }
+
+        // Когда пользователь нажимает на кнопку "Войти", открываем модальное окно
+        loginBtn.onclick = function() {
+            loginModal.style.display = "block";
+        }
+
+        // Когда пользователь нажимает на кнопку "Регистрация", открываем модальное окно
+        registerBtn.onclick = function() {
+            registerModal.style.display = "block";
+        }
+
+        // Когда пользователь нажимает на <span> (x), закрываем модальное окно входа
+        loginCloseBtn.onclick = function() {
+            loginModal.style.display = "none";
+        }
+
+        // Когда пользователь нажимает на <span> (x), закрываем модальное окно регистрации
+        registerCloseBtn.onclick = function() {
+            registerModal.style.display = "none";
+        }
+
+        // Когда пользователь щелкает за пределами модального окна, закрываем его
+        window.onclick = function(event) {
+            if (event.target == loginModal || event.target == registerModal || event.target == accountInfoModal) {
+                 loginModal.style.display = "none";
+                registerModal.style.display = "none";
+                accountInfoModal.style.display = "none";
+            }
+        }
+           // Получаем все элементы навигации
+    const navLinks = document.querySelectorAll('.nav-container a');
+
+// Для каждого элемента навигации
+navLinks.forEach(link => {
+    // Добавляем обработчик клика
+    link.addEventListener('click', function(event) {
+        event.preventDefault(); // Предотвращаем переход по ссылке
+
+        // Получаем ID модального окна из атрибута data-modal
+        const modalId = this.dataset.modal;
+
+        // Находим модальное окно по ID
+        const modal = document.getElementById(modalId);
+
+        // Если модальное окно существует, показываем его
+        if (modal) {
+            modal.style.display = 'block';
+        }
+    });
+});
+
+// Получаем все кнопки закрытия
+const closeButtons = document.querySelectorAll('.close');
+
+// Для каждой кнопки закрытия
+closeButtons.forEach(button => {
+    // Добавляем обработчик клика
+    button.addEventListener('click', function() {
+        // Находим ближайший родительский элемент с классом modal
+        const modal = this.closest('.modal');
+
+        // Если модальное окно существует, скрываем его
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    });
+});
+
+ // Закрытие модального окна при клике вне его
+window.addEventListener('click', function(event) {
+    if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+    }
+});
+    </script>
+
+
+</body>
+</html>
