@@ -86,8 +86,8 @@ body {
 
 .nav-container ul {
     list-style: none;
-    padding: 0px;
-    margin: 40px;
+    padding: 2px;
+    margin: 2px;
     display: flex;
     justify-content: center;
 }
