@@ -284,6 +284,7 @@ body {
     .navigation .nav-container ul {
       flex-direction: column; /* Пункты меню в столбик */
       align-items: center; /* Центрируем */
+      margin-top: 35px;
     }
   
     .navigation .nav-container li {
