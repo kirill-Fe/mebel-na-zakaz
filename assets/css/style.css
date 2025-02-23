@@ -1,0 +1,538 @@
+/* Общие стили */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    padding-top: 60px; /*  Задаем отступ равный высоте хедера, можно изменить */
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Шапка */
+.header {
+    background-color: #fff;
+    color: #333;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+    /*  Новые стили для фиксации хедера */
+    position: fixed; /* Фиксированная позиция */
+    top: 0; /* Прилипает к верху экрана */
+    left: 0; /* Прилипает к левому краю экрана */
+    width: 100%; /* На всю ширину экрана */
+    z-index: 100; /* Поверх всего остального контента */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Тень для выделения */
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.phone-numbers {
+    margin-right: 20px;
+}
+
+.phone-numbers a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    margin-bottom: 5px;
+}
+
+.user-actions a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    margin-left: 10px;
+    background-color: #e44d26;
+    transition: background-color 0.3s;
+}
+
+.user-actions a:hover {
+    background-color: #d13b14;
+}
+
+/* Навигация */
+.navigation {
+    margin-top: 20px;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+}
+
+.nav-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-container li {
+    margin: 0 15px;
+}
+
+.nav-container a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.nav-container a:hover {
+    background-color: #555;
+}
+
+/* Основной контент */
+.main-content {
+    padding: 20px 0;
+}
+
+/* Слайдер */
+.slider {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.slider-item {
+    display: flex; /* Включаем Flexbox */
+    justify-content: center; /* Центрирование по горизонтали */
+    align-items: center; /* Центрирование по вертикали */
+    position: relative;
+}
+
+.slider-item img {
+    width: 50%;
+    height: auto;
+    display: block;
+}
+
+.slider-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.slider-text h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.slider-text p {
+    font-size: 1.2em;
+}
+
+.slider-button {
+    background-color: #e44d26;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 15px;
+    transition: background-color 0.3s;
+}
+
+.slider-button:hover {
+    background-color: #d13b14;
+}
+
+/* Категории */
+.categories {
+    margin-bottom: 30px;
+}
+
+.categories h2,
+.featured-products h2 {
+    border-bottom: 2px solid #e44d26;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.category-item {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.category-item:hover {
+    transform: translateY(-5px);
+}
+
+.category-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Товары */
+.featured-products {
+    margin-bottom: 30px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.product-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.product-button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.product-button:hover {
+    background-color: #2980b9;
+}
+
+/* Подвал */
+.footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 30px;
+}
+
+/* Адаптивность для маленьких экранов (максимальная ширина 768px) */
+@media (max-width: 768px) {
+
+    .header-container {
+      flex-direction: column; /* Располагаем элементы в столбик */
+      align-items: center; /* Центрируем */
+      text-align: center; /* Центрируем текст */
+    }
+  
+    .logo {
+      margin-bottom: 10px;
+    }
+  
+    .user-actions {
+      margin-top: 10px;
+    }
+  
+    .navigation .nav-container ul {
+      flex-direction: column; /* Пункты меню в столбик */
+      align-items: center; /* Центрируем */
+    }
+  
+    .navigation .nav-container li {
+      margin: 10px 0; /* Отступы сверху и снизу */
+    }
+  
+    .slider .slider-text {
+      padding: 10px;
+      font-size: 0.8em;
+    }
+  
+    .slider .slider-text h2 {
+      font-size: 1.5em;
+    }
+  
+    .categories-grid,
+    .product-grid {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Меньше карточки */
+    }
+  
+    .main-content .container {
+      width: 95%; /* Увеличиваем ширину контейнера */
+      padding: 10px;
+    }
+  
+    .sidebar {
+      position: static; /* Убираем фиксированную позицию */
+      width: 100%; /* Боковая панель на всю ширину */
+      margin-bottom: 20px;
+    }
+  
+    .sidebar ul {
+      display: flex;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+  
+    .sidebar li {
+      margin-right: 10px;
+    }
+  
+    .sidebar a {
+      padding: 8px;
+    }
+
+    
+  
+    .main-content {
+      margin-left: 0; /* Убираем отступ для боковой панели */
+    }
+  }
+  
+/* Отзывы */
+.reviews {
+    background-color: #fff;
+    padding: 30px 0;
+    margin-top: 30px;
+    border-top: 1px solid #ddd;
+}
+
+.reviews .container {
+    max-width: 800px;
+}
+
+.reviews h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e44d26;
+    padding-bottom: 10px;
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.review-card {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.review-header img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.review-header h3 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.review-card p {
+    color: #555;
+    line-height: 1.4;
+}
+
+.rating {
+    margin-top: 10px;
+    color: #f39c12; /* Золотистый цвет звезд */
+}
+
+.add-review {
+    margin-top: 30px;
+    padding: 30px;
+    background-color: #f2f2f2;
+    border-radius: 8px;
+}
+
+.add-review h3 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.add-review .form-group {
+    margin-bottom: 15px;
+}
+
+.add-review label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.add-review input[type="text"],
+.add-review textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.add-review textarea {
+    resize: vertical;
+}
+
+.add-review button[type="submit"] {
+    background-color: #e44d26;
+    color: #fff;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-review button[type="submit"]:hover {
+    background-color: #d13b14;
+}
+
+/* Стили для footer */
+.footer {
+    background-color: #333;
+    color: #7e7e7e;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 30px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-container p {
+    margin: 0;
+}
+
+.social-links a {
+    display: inline-block;
+    color: #fff;
+    font-size: 1.5em;
+    margin-left: 15px;
+    transition: color 0.3s;
+}
+
+.social-links a:hover {
+    color: #e44d26;
+}
+
+.rating {
+    display: flex; /* Размещаем звезды в ряд */
+    flex-direction: row-reverse; /* Порядок звезд от 5 к 1 */
+    justify-content: center; /* Центрируем звезды */
+    margin-top: 10px; /* Добавляем отступ сверху */
+}
+
+.rating-input {
+    display: none;
+}
+
+.rating-label {
+    font-size: 2em;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 5px; /* Добавляем немного пространства между звездами */
+}
+
+.rating-label:hover,
+.rating-label:hover ~ .rating-label,
+.rating-input:checked ~ .rating-label {
+    color: #f39c12;
+}
+
+/* Скрываем блок more-info по умолчанию */
+.more-info {
+    display: none;
+    background-color: #f0f0f0;
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+/* Стилизуем блок more-info (по желанию) */
+
+
+/* Показываем блок more-info, когда на него ссылаются якорем */
+.more-info:target {
+    display: block;
+}
+
+/* Стилизуем кнопку "Скрыть" */
+.hide-info-button {
+    background-color: #777;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.hide-info-button:hover {
+    background-color: #555;
+}
